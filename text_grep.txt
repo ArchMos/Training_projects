@@ -2,7 +2,7 @@ import re
 import collections
 
 
-file = open("/Users/Arthur/Documents/Документы/Programming/Python/booktitlestext.txt", 'r')
+file = open("text.txt", 'r')
 cont = file.read()
 print(cont)
 contspl = cont.split()
