@@ -1,0 +1,80 @@
+import re
+import collections
+
+
+file = open("/Users/Arthur/Documents/Документы/Programming/Python/booktitlestext.txt", 'r')
+cont = file.read()
+print(cont)
+contspl = cont.split()
+
+conts = list(range(1, len(contspl)))
+
+dicon = dict(zip(conts, contspl))
+
+cdicont = list(dicon.items())
+
+pattern = input("Enter your text: ")
+
+if re.search(pattern, cont):
+    print("Match!")
+else:
+    print('No match :(')
+    quit()
+
+def invert():
+    if re.search(pattern, cont):
+        print('Invert func:\n', re.sub(pattern, '', cont))
+
+def ignore_case():
+    print('Ignore case:\n', re.findall(pattern, cont, re.IGNORECASE))
+
+def count():
+    count = re.findall(pattern, cont)
+    out = collections.Counter(count)
+    print('Number of matches: ', out)
+
+def line_number():
+    for k, v in dicon.items():
+        if v == pattern:
+            print('Line number: ', k, pattern)
+
+def context_N():
+    for k, v in dicon.items():
+        if v == pattern:
+            print('Lines before match: ', cdicont[:k])
+            print('Lines after match: ', cdicont[k:])
+
+def before_context_N():
+    for k, v in dicon.items():
+        if v == pattern:
+            print('Lines before match: ', cdicont[:k])
+
+def after_context_N():
+    for k, v in dicon.items():
+        if v == pattern:
+            print('Lines after match: ', cdicont[k:])
+
+def pattern_str():
+    pstr = input('Enter a searching mode: \nType -v for inverted searching; -i for ignore case;\n'
+          '-c to output only the number of matches; -wn to output word number + match;\n'
+          '-C to output strings before and after match; -CB to output strings before;\n'
+          '-CA to output strings after.\n')
+    if '-v' in pstr:
+        invert()
+    elif '-i' in pstr:
+        ignore_case()
+    elif '-c' in pstr:
+        count()
+    elif '-wn' in pstr:
+        line_number()
+    elif '-C' in pstr:
+        context_N()
+    elif '-CB' in pstr:
+        before_context_N()
+    elif '-CA' in pstr:
+        after_context_N()
+    else:
+        print("Invalid mode name")
+
+pattern_str()
+
